@@ -1,7 +1,8 @@
 from pydantic import BaseModel
 import os
-from fastapi import FastAPI, status
+from fastapi import FastAPI, Query
 from enum import Enum
+from typing import Annotated
 
 app = FastAPI()
 
@@ -55,8 +56,8 @@ def root_three(status: Status):
     return {"status": status, "message": "Order completed"}
 
 
-@app.get(f"/identity")
-def provide_identity(name: str = "Christian", id: int = 10978):
+@app.get("/identity/{name}")
+def provide_identity(name: Annotated[str | None, Query(min_length=2, max_length=10)] = "Christian", id: int = 10978):
     return {"name": name, "id": id}
 
 
