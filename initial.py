@@ -58,3 +58,8 @@ def root_three(status: Status):
 @app.get(f"/identity")
 def provide_identity(name: str = "Christian", id: int = 10978):
     return {"name": name, "id": id}
+
+
+@app.post("/user")
+def get_user(user: User):
+    return {"id": user.id, "name": user.name}
