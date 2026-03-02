@@ -1,8 +1,8 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 import os
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, Path
 from enum import Enum
-from typing import Annotated
+from typing import Annotated, Literal
 
 app = FastAPI()
 
@@ -31,6 +31,11 @@ class Status(str, Enum):
     completed = "completed"
 
 
+class FilterParams(BaseModel):
+    price: int = Field(100)
+    status: Literal["sold", "not sold"] = "sold"
+
+
 data = {
     "id": 123
 }
@@ -42,9 +47,9 @@ async def root():
     return {"name": "Christian"}
 
 
-@app.get("/items/{id}")
-def root_two(id: int):
-    return User(id=id, name="John Doe")
+@app.get("/items/")
+def root_two(item: Annotated[FilterParams, Query()]):
+    return {"price": item.price, "status": item.status}
 
 
 @app.get("/status/{status}")
@@ -57,8 +62,13 @@ def root_three(status: Status):
 
 
 @app.get("/identity/{name}")
-def provide_identity(name: Annotated[str | None, Query(min_length=2, max_length=10)] = "Christian", id: int = 10978):
+def provide_identity(name: Annotated[str | None, Path(min_length=2, max_length=10)], id: int = 10978):
     return {"name": name, "id": id}
+
+
+@app.get("/name/{name}")
+def generate_name(name: Annotated[str, Path(min_length=4, max_length=11)]):
+    return {"name": name}
 
 
 @app.post("/user")
