@@ -1,52 +1,6 @@
-# Environment variables (CRITICAL - contains secrets!)
 .env
-.env.local
-.env.*.local
-
-# Python cache
 __pycache__/
-*.py[cod]
-*$py.class
-*.so
-
-# Virtual environments
-venv/
-env/
-ENV/
 virtual/
-.venv
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-.DS_Store
-
-# Testing
-.pytest_cache/
-.coverage
-htmlcov/
-.tox/
-
-# Distribution / packaging
-dist/
-build/
-*.egg-info/
-
-# Logs
-*.log
-
-# Database
-*.db
-*.sqlite3
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# mypy
-.mypy_cache/
-
-
-# SECRETS
 client_secret.json
+app/__pycache__/
+alembic/__pycache__/
